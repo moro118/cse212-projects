@@ -1,45 +1,50 @@
+using System;
+
 public class Node
 {
-    public int Data { get; set; }
-    public Node? Right { get; private set; }
-    public Node? Left { get; private set; }
+    public int Data { get; }
+    public Node? Left { get; set; }
+    public Node? Right { get; set; }
 
-    public Node(int data)
+    public Node(int value)
     {
-        this.Data = data;
+        Data = value;
     }
 
+    // Problem 1: Insert Unique Values Only
     public void Insert(int value)
     {
-        // TODO Start Problem 1
-
         if (value < Data)
         {
-            // Insert to the left
             if (Left is null)
                 Left = new Node(value);
             else
                 Left.Insert(value);
         }
-        else
+        else if (value > Data)
         {
-            // Insert to the right
             if (Right is null)
                 Right = new Node(value);
             else
                 Right.Insert(value);
         }
+        // if value == Data do nothing (no duplicates)
     }
 
+    // Problem 2: Contains
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        if (value == Data) return true;
+        if (value < Data)
+            return Left != null && Left.Contains(value);
+        return Right != null && Right.Contains(value);
     }
 
+    // Problem 4: GetHeight
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        int leftHeight = Left?.GetHeight() ?? 0;
+        int rightHeight = Right?.GetHeight() ?? 0;
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
